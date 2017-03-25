@@ -128,38 +128,28 @@ The code for my final model is located in the 11th cell of the IPython notebook.
 
 #### 4 Hyper-Parameters
 
-To train the model, I used the Cross Entropy as my cost function and [Adam Algorithm](https://arxiv.org/pdf/1412.6980v8.pdf) as the optimizer. The learning rate, batch size, and epoch are 0.001, 128, and 32 respectively. The choosen model was the one that has lowest error on validation data.
+To train the model, I used the Cross Entropy as my cost function and [Adam Algorithm](https://arxiv.org/pdf/1412.6980v8.pdf) as an optimizer. The learning rate, batch size, and epoch are 0.001, 128, and 32 respectively. The choosen model was the one that has lowest error on validation data.
 
 #### 5 Process of Finding solution
 
-My final model is a result of testing and balancing parameters. I spent majority of my time try out different extreme setups to understand how different components in a network would reflect the prediction and training time. 
+My final model is a result of trying out different configurations and balancing parameters. I spent majority of my time tried out different extreme setups to understand how different components in a network would reflect the prediction and training time. 
 
-My first model was very shallow-- 1 Convolution layer and 1 Fully Connected. The problem of this model is that it does not have enough complexity for the task resulting in poor classifying result. So I adjusting by adding a lot more network but that result in never ending training. So I changed the goal is to find a number of layers that allows me to iterate quickly yet perform well on the testing data. After trial and error I found about 17-22 layers is a sweet spot for my hardware setup. After that, I tried out different pooling types, activating units to see how it would affect the predicting and learning speed. 
+My first model was very shallow--1 Convolution layer and 1 Fully Connected. The problem of this model was that it did not have enough complexity for the task resulting in poor classifying result. So I adjusted it by adding a lot more layers. However that resulted in never ending training. So I changed my goal to finding a number of layers that allows me to iterate quickly yet perform well on the testing data. After several trials and errors, I found that about 17-22 layers is a sweet spot for my hardware setup. After that, I tried out different pooling types, activating units to see how it would affect the predicting and learning speed. 
 
 The keys take away from this experiment are:
 
 - Combining elu/relu and max pooling offers a faster learning comparing to sigmoid and average pool
 - Local Response Normalization is also adding contrast to the image and that transfers to faster learning in many cases
 - Adam algorithm when use in place of Stochastic Gradient Descent shows converging result at a fast pace without messing with learning rate but notice a longer computation time
+- The output size of each does not affect the end prediction result much as long as they resemble the same shape (pan out,pan in). So having more is probably gives a better model but requires more training data and more time to train the model
+- Dropout layers help reduce over-fitting, but be sure to set a keep rate to 1 when not traning
 
-The code for training the model is located in the 12th cell of the IPython notebook. 
+
+The code to run the training process is located in the 12th cell of the IPython notebook. 
 
 My final model results were:
 * validation set accuracy of 0.982
 * test set accuracy of 0.965
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to over fitting or under fitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
 
 ###Test a Model on New Images
 
