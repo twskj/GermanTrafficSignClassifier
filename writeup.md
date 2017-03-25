@@ -33,6 +33,13 @@ You're reading it! and here is a link to my [project code](Traffic_Sign_Classifi
 
 ### Data Set Summary & Exploration
 
+I used Numpy to calculate overview of the dataset including 
+
+- Number of training and testing data
+- Image dimension 
+- Number of unique label
+
+The code for this step is contained in the second code cell of the IPython notebook.  
 Here's how training and testing data look like:
 
     Number of training examples = 34799
@@ -40,40 +47,15 @@ Here's how training and testing data look like:
     Image data shape = (32, 32, 3)
     Number of classes = 43
    
-Below is the snippet. Where X_train and y_train are features and labels
+To explore this dataset further I plot sample image from each class and a histogram of training dataset and validation set.
 
-```python
-import numpy as np
+Here are a sample of the result:
 
-n_train = y_train.shape[0]
+![sample1](img/sample1.png)
+![sample2](img/sample2.png)
+![training histrogram](img/train_hist.png)
+![validating histrogram](img/valid_hist.png)
 
-print(y_train)
-
-n_test = y_test.shape[0]
-
-image_shape = X_train[0].shape
-
-n_classes = len(np.unique(y_train))
-
-print("Number of training examples =", n_train)
-print("Number of testing examples =", n_test)
-print("Image data shape =", image_shape)
-print("Number of classes =", n_classes)
-```
-
-
-
-#### 1. Provide a basic summary of the data set and identify where in your code the summary was done. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
-
-The code for this step is contained in the second code cell of the IPython notebook.  
-
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
-
-* The size of training set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
 
 ####2. Include an exploratory visualization of the dataset and identify where the code is in your code file.
 
