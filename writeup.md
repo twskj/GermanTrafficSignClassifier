@@ -81,18 +81,7 @@ The preprocessing process performs these three functions in order:
  2. Randomly adjusting brightness using [tf.image.random_brightness](https://www.tensorflow.org/api_docs/python/tf/image/random_brightness)
  3. Normalized image mean using [tf.image.per_image_standardization](https://www.tensorflow.org/api_docs/python/tf/image/per_image_standardization)
 
-I decided to performing the first two steps because it reflect a real-world lightning condition. It also artificially increase number of training data and reduce the chance of model "remember" traffic signs only on cirtain conditions. I then normalized to the image to have a zero mean and a unit norm to aid a training process.
-
-
-####2. Describe how, and identify where in your code, you set up training, validation and testing data. How much data was in each set? Explain what techniques were used to split the data into these sets. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, identify where in your code, and provide example images of the additional data)
-
-The code for splitting the data into training and validation sets is contained in the fifth code cell of the IPython notebook.  
-
-To cross validate my model, I randomly split the training data into a training set and validation set. I did this by ...
-
-My final training set had X number of images. My validation set and test set had Y and Z number of images.
-
-The sixth code cell of the IPython notebook contains the code for augmenting the data set. I decided to generate additional data because ... To add more data to the the data set, I used the following techniques because ... 
+I decided to performing the first two steps because it reflects a real-world lightning condition that can change through out the day. It also artificially increase number of training data and reduce the chance of model "remember" traffic signs. I then normalized to the image to have a zero mean and a unit norm to aid a training process.
 
 Here is an example of an original image and an augmented image:
 
@@ -100,24 +89,50 @@ Here is an example of an original image and an augmented image:
 
 The difference between the original data set and the augmented data set is the following ... 
 
+#### 2 Model Architecture
+My model consists of 4 layers of convolution layers-ELU-Pooling and 3 fully connected layers with 2 dropouts after the first two layers.
 
+Here's my model in detail:
+
+| Layer         		        |     Description	        					| Input Size | Output Size |
+|:-----------------------------:|:---------------------------------------------:|:----------:|:-----------:| 
+| Input         		        | Input Distortion      						| 32x32x3    | 32x32x3     |
+| Convolution       	        | 5x5 ksize, 1x1 stride, same padding          	| 32x32x3    | 28x28x32    |
+| LRN 	                        | Local response Normalization                  | 28x28x32   | 28x28x32    |
+| ELU     	                    | Exponential Linear Units                    	| 28x28x32   | 28x28x32    |
+| Max pooling	      	        | 5x5 ksize, 1x1 stride, valid padding          | 28x28x32   | 24x24x32    |
+| Convolution       	        | 4x4 ksize 1x1 stride, same padding           	| 24x24x32   | 21x21x64    |
+| ELU     	                    | Exponential Linear Units                    	| 21x21x64   | 21x21x64    |
+| Average pooling	      	    | 4x4 ksize, 1x1 stride, valid padding			| 21x21x64   | 18x18x64    | 
+| Convolution         	        | 3x3 ksize, 1x1 stride, same padding           | 18x18x64   | 16x16x72    |
+| ELU     	                    | Exponential Linear Units                      | 18x18x64   | 16x16x72    |
+| Average pooling	      	    | 3x3 ksize, 2x2 stride, valid padding  	    | 16x16x72   | 7x7x72      |
+| Convolution        	        | 2x2 ksize, 1x1 stride, valid padding          | 7x7x72 	 | 6x6x72      |
+| ELU     	                    | Exponential Linear Units                     	| 6x6x72     | 6x6x72      |
+| Average pooling	      	    | 2x2 ksize, 2x2 stride, valid padding      	| 6x6x72     | 3x3x128     |
+| Flatten                       |                                               | 3x3x128    | 1152        |
+| Fully connected		        |           									| 1152       | 256         |
+| RELU                          | Rectified Linear Unit                         | 256        | 256         |
+| DROP OUT                      | Keep rate 0.5                                 | 256        | 256         |
+| Fully connected		        |         									    | 256        | 128         |
+| RELU                          | Rectified Linear Unit                         | 128        | 128         |
+| DROP OUT                      | Keep rate 0.5                                 | 128        | 128         |
+| Fully connected		        |            									| 128        | 43          |
+| Softmax				        |         									    | 43         | 1           |
+
+The code for my final modell is located in the 11th cell  of the IPython notebook.
+
+
+ The cost function is cross entropy. The learning rate, batch size, and epoch are 0.001, 128, and 32 respectively. The choosen model was the one that has lowest error on validation data.
+ 
+ 
 ####3. Describe, and identify where in your code, what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
 The code for my final model is located in the seventh cell of the ipython notebook. 
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
+
  
 
 
