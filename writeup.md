@@ -71,19 +71,18 @@ Here are a few sample of the result:
 ![validating histrogram](img/valid_hist.png)
 
 
-###Design and Test a Model Architecture
+### Design and Test a Model Architecture
 
-####1. Describe how, and identify where in your code, you preprocessed the image data. What tecniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc.
+#### 1. Preprocessing input images.
 
-The code for this step is contained in the fourth code cell of the IPython notebook.
+The code for this step is in a function `distorted_input` (contained in the 10th code cell of the IPython notebook).
+The preprocessing process performs these three functions in order:
+ 1. Randomly adjusting contrast using [tf.image.random_contrast](https://www.tensorflow.org/api_docs/python/tf/image/random_contrast)
+ 2. Randomly adjusting brightness using [tf.image.random_brightness](https://www.tensorflow.org/api_docs/python/tf/image/random_brightness)
+ 3. Normalized image mean using [tf.image.per_image_standardization](https://www.tensorflow.org/api_docs/python/tf/image/per_image_standardization)
 
-As a first step, I decided to convert the images to grayscale because ...
+I decided to performing the first two steps because it reflect a real-world lightning condition. It also artificially increase number of training data and reduce the chance of model "remember" traffic signs only on cirtain conditions. I then normalized to the image to have a zero mean and a unit norm to aid a training process.
 
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
-
-As a last step, I normalized the image data because ...
 
 ####2. Describe how, and identify where in your code, you set up training, validation and testing data. How much data was in each set? Explain what techniques were used to split the data into these sets. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, identify where in your code, and provide example images of the additional data)
 
