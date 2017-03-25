@@ -89,7 +89,10 @@ Here is an example of an original image and an augmented image:
 
 The difference between the original data set and the augmented data set is the following ... 
 
-#### 2 Model Architecture
+#### 2 Batching & Shuffling 
+Batching and shuffling is simply done using python array slicing and scikit-learn `shuffle`. The code is in 12th cell of the IPython notebook
+
+#### 3 Model Architecture
 My model consists of 4 layers of convolution layers-ELU-Pooling and 3 fully connected layers with 2 dropouts after the first two layers.
 
 Here's my model in detail:
@@ -113,43 +116,37 @@ Here's my model in detail:
 | Flatten                       |                                               | 3x3x128    | 1152        |
 | Fully connected		        |           									| 1152       | 256         |
 | RELU                          | Rectified Linear Unit                         | 256        | 256         |
-| DROP OUT                      | Keep rate 0.5                                 | 256        | 256         |
+| Drop Out                      | Keep rate 0.5                                 | 256        | 256         |
 | Fully connected		        |         									    | 256        | 128         |
 | RELU                          | Rectified Linear Unit                         | 128        | 128         |
-| DROP OUT                      | Keep rate 0.5                                 | 128        | 128         |
+| Drop Out                      | Keep rate 0.5                                 | 128        | 128         |
 | Fully connected		        |            									| 128        | 43          |
 | Softmax				        |         									    | 43         | 1           |
 
-The code for my final modell is located in the 11th cell  of the IPython notebook.
+The code for my final model is located in the 11th cell of the IPython notebook.
 
 
- The cost function is cross entropy. The learning rate, batch size, and epoch are 0.001, 128, and 32 respectively. The choosen model was the one that has lowest error on validation data.
- 
- 
-####3. Describe, and identify where in your code, what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+#### 4 Hyper-Parameters
 
-The code for my final model is located in the seventh cell of the ipython notebook. 
+To train the model, I used the Cross Entropy as my cost function and [Adam Algorithm](https://arxiv.org/pdf/1412.6980v8.pdf) as the optimizer. The learning rate, batch size, and epoch are 0.001, 128, and 32 respectively. The choosen model was the one that has lowest error on validation data.
 
-My final model consisted of the following layers:
+#### 5 Process of Finding solution
 
+My final model is a result of testing and balancing parameters. I spent majority of my time try out different extreme setups to understand how different components in a network would reflect the prediction and training time. 
 
- 
+My first model was very shallow-- 1 Convolution layer and 1 Fully Connected. The problem of this model is that it does not have enough complexity for the task resulting in poor classifying result. So I adjusting by adding a lot more network but that result in never ending training. So I changed the goal is to find a number of layers that allows me to iterate quickly yet perform well on the testing data. After trial and error I found about 17-22 layers is a sweet spot for my hardware setup. After that, I tried out different pooling types, activating units to see how it would affect the predicting and learning speed. 
 
+The keys take away from this experiment are:
 
-####4. Describe how, and identify where in your code, you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+- Combining elu/relu and max pooling offers a faster learning comparing to sigmoid and average pool
+- Local Response Normalization is also adding contrast to the image and that transfers to faster learning in many cases
+- Adam algorithm when use in place of Stochastic Gradient Descent shows converging result at a fast pace without messing with learning rate but notice a longer computation time
 
-The code for training the model is located in the eigth cell of the ipython notebook. 
-
-To train the model, I used an ....
-
-####5. Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
-
-The code for calculating the accuracy of the model is located in the ninth cell of the Ipython notebook.
+The code for training the model is located in the 12th cell of the IPython notebook. 
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* validation set accuracy of 0.982
+* test set accuracy of 0.965
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
