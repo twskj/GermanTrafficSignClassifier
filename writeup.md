@@ -39,31 +39,48 @@ I used Numpy to calculate overview of the dataset including
 - Image dimension 
 - Number of unique label
 
-The code for this step is contained in the second code cell of the IPython notebook.  
 Here's how training and testing data look like:
 
     Number of training examples = 34799
     Number of testing examples = 12630
     Image data shape = (32, 32, 3)
     Number of classes = 43
-   
+
+Below is the snippet that generate the result.
+
+```python
+import numpy as np
+
+n_train = y_train.shape[0]
+print(y_train)
+n_test = y_test.shape[0]
+image_shape = X_train[0].shape
+n_classes = len(np.unique(y_train))
+
+print("Number of training examples =", n_train)
+print("Number of testing examples =", n_test)
+print("Image data shape =", image_shape)
+print("Number of classes =", n_classes)
+```
 To explore this dataset further I plot sample image from each class and a histogram of training dataset and validation set.
 
 Here are a sample of the result:
 
+#### Sample of Speed-Limit sign
+
 ![sample1](img/sample1.png)
+
+#### Sample of Children Crossing sign
+
 ![sample2](img/sample2.png)
+
+#### Histrogram of Training Data
+
 ![training histrogram](img/train_hist.png)
+
+#### Histrogram of Validating Data
 ![validating histrogram](img/valid_hist.png)
 
-
-####2. Include an exploratory visualization of the dataset and identify where the code is in your code file.
-
-The code for this step is contained in the third code cell of the IPython notebook.  
-
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
-
-![alt text][image1]
 
 ###Design and Test a Model Architecture
 
