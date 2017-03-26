@@ -214,6 +214,6 @@ Lastly, I think it's worth looking at sign 10 as well:
 ![sign 10](img/sign10_top5.png)
 
 The model couldn't guess it right on the 1st and the 2nd try. However the model got it right on the 3rd try.
-From the sequence of guessing reveals that the model indeed use a feature of red triangle feature to make those guess except the priority road
+From the sequence of guessing reveals that the model indeed use a feature of red triangle feature to make those guesses with an exception on "priority road"
 
 
