@@ -84,12 +84,6 @@ The preprocessing process performs these three functions in order:
 
 I decided to performing the first two steps because it reflects a real-world lightning condition that can change through out the day. It also artificially increase number of training data and reduce the chance of model "remember" traffic signs. I then normalized to the image to have a zero mean and a unit norm to aid a training process.
 
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
-
 #### Batching & Shuffling 
 Batching and shuffling is simply done using python array slicing and scikit-learn `shuffle`. The code is in 12th cell of the IPython notebook
 
@@ -130,7 +124,9 @@ The code for my final model is located in the 11th cell of the IPython notebook.
 
 #### Hyper-Parameters
 
-To train the model, I used the Cross Entropy as my cost function and [Adam Algorithm](https://arxiv.org/pdf/1412.6980v8.pdf) as an optimizer. The learning rate, batch size, and epoch are 0.001, 128, and 32 respectively. The choosen model was the one that has lowest error on validation data.
+To train the model, I used the Cross Entropy as my cost function and [Adam Algorithm](https://arxiv.org/pdf/1412.6980v8.pdf) as an optimizer. The learning rate, batch size, and epoch are 0.001, 256, and 16 respectively. The choosen model was the one that has lowest error on validation data. Below is a plot that show model accuracy over after each epoch using the setup parameters. Notice it reached at 0.98 after 7 epoch.
+
+![learning rate over time](img/learning.png)
 
 #### Process of Finding solution
 
@@ -195,23 +191,25 @@ For the first image, the model is cirtain it's a 120km/h speed limit but the 2nd
 
 For the second image, the model is not very sure wheter the sign is 80km/h or 50km/h which a probability of 59.16% vs 38.8%. But it was able to predict correctly.
 
-
 ![sign 3](img/sign3_top5.png)
+
+For the third image, the model could not make a right guess though it is very sure. Several things that may contribute to this misclassification is that the sign is out of focus and there s a strong white border in the background.
 
 ![sign 4](img/sign4_top5.png)
 
+The forth image is an artificial image. I include this sign as a sanity check that it can generalize. And the result was pretty good. The model is able to say it's a "Traffic Signal" sign with 99% confident.
+
 ![sign 5](img/sign5_top5.png)
 
+The last image the model is 100% sure  that the sign is "Turn right ahead"
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+----------
 
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+Lastly, I think it's worth looking at sign 10 as well:
+
+![sign 10](img/sign10_top5.png)
+
+The model couldn't guess it right on the 1st and the 2nd try. However the model got it right on the 3rd try.
+From the sequence of guessing reveals that the model indeed use a feature of red triangle feature to make those guesses with an exception on "priority road"
 
 
-For the second image ... 
