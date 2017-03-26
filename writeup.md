@@ -130,7 +130,9 @@ The code for my final model is located in the 11th cell of the IPython notebook.
 
 #### Hyper-Parameters
 
-To train the model, I used the Cross Entropy as my cost function and [Adam Algorithm](https://arxiv.org/pdf/1412.6980v8.pdf) as an optimizer. The learning rate, batch size, and epoch are 0.001, 128, and 32 respectively. The choosen model was the one that has lowest error on validation data.
+To train the model, I used the Cross Entropy as my cost function and [Adam Algorithm](https://arxiv.org/pdf/1412.6980v8.pdf) as an optimizer. The learning rate, batch size, and epoch are 0.001, 256, and 16 respectively. The choosen model was the one that has lowest error on validation data. Below is a plot that show model accuracy over after each epoch using the setup parameters. Notice it reached at 0.98 after 7 epoch.
+
+![learning rate over time](img/learning.png)
 
 #### Process of Finding solution
 
