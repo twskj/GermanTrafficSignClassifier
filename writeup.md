@@ -139,7 +139,7 @@ The keys take away from this experiment are:
 - Combining elu/relu and max pooling offers a faster learning comparing to sigmoid and average pool
 - Local Response Normalization is also adding contrast to the image and that transfers to faster learning in many cases
 - Adam algorithm when use in place of Stochastic Gradient Descent shows converging result at a fast pace without messing with learning rate but notice a longer computation time
-- The output size of each does not affect the end prediction result much as long as they resemble the same shape (pan out,pan in). So having more is probably gives a better model but requires more training data and more time to train the model
+- The output size of each layer does not affect the end prediction result much as long as they resemble the same shape (pan out,pan in). So having more is probably gives a better model but requires more training data and more time to train the model
 - Dropout layers help reduce over-fitting, but be sure to set a keep rate to 1 when not traning
 
 
