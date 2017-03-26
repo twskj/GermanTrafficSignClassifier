@@ -70,10 +70,11 @@ Here are a few sample of the result:
 #### Histrogram of Validating Data
 ![validating histrogram](img/valid_hist.png)
 
+-----------------------------------------------
 
 ### Design and Test a Model Architecture
 
-#### 1. Preprocessing input images.
+#### Preprocessing input images.
 
 The code for this step is in a function `distorted_input` (contained in the 10th code cell of the IPython notebook).
 The preprocessing process performs these three functions in order:
@@ -89,10 +90,10 @@ Here is an example of an original image and an augmented image:
 
 The difference between the original data set and the augmented data set is the following ... 
 
-#### 2 Batching & Shuffling 
+#### Batching & Shuffling 
 Batching and shuffling is simply done using python array slicing and scikit-learn `shuffle`. The code is in 12th cell of the IPython notebook
 
-#### 3 Model Architecture
+#### Model Architecture
 My model consists of 4 layers of convolution layers-ELU-Pooling and 3 fully connected layers with 2 dropouts after the first two layers.
 
 Here's my model in detail:
@@ -126,11 +127,11 @@ Here's my model in detail:
 The code for my final model is located in the 11th cell of the IPython notebook.
 
 
-#### 4 Hyper-Parameters
+#### Hyper-Parameters
 
 To train the model, I used the Cross Entropy as my cost function and [Adam Algorithm](https://arxiv.org/pdf/1412.6980v8.pdf) as an optimizer. The learning rate, batch size, and epoch are 0.001, 128, and 32 respectively. The choosen model was the one that has lowest error on validation data.
 
-#### 5 Process of Finding solution
+#### Process of Finding solution
 
 My final model is a result of trying out different configurations and balancing parameters. I spent majority of my time tried out different extreme setups to understand how different components in a network would reflect the prediction and training time. 
 
@@ -151,14 +152,17 @@ My final model results were:
 * validation set accuracy of 0.982
 * test set accuracy of 0.965
 
-###Test a Model on New Images
+-----------------------------------------------
+ 
+### Test a Model on New Images
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+Here are 5 out of 36 signs I found on the web:
 
-Here are five German traffic signs that I found on the web:
-
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![go straight sign](data/byoi/sign3.png)
+![keep right](data/byoi/sign8.png)
+![no entry sign](data/byoi/sign22.png)
+![speed limit 70km/h](data/byoi/sign24.png)
+![no entry sign](data/byoi/sign33.png)
 
 The first image might be difficult to classify because ...
 
