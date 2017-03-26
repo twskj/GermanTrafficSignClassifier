@@ -103,17 +103,18 @@ Here's my model in detail:
 | Input         		        | Input Distortion      						| 32x32x3    | 32x32x3     |
 | Convolution       	        | 5x5 ksize, 1x1 stride, same padding          	| 32x32x3    | 28x28x32    |
 | LRN 	                        | Local response Normalization                  | 28x28x32   | 28x28x32    |
-| ELU     	                    | Exponential Linear Units                    	| 28x28x32   | 28x28x32    |
+| RELU     	                    | Exponential Linear Units                    	| 28x28x32   | 28x28x32    |
 | Max pooling	      	        | 5x5 ksize, 1x1 stride, valid padding          | 28x28x32   | 24x24x32    |
 | Convolution       	        | 4x4 ksize 1x1 stride, same padding           	| 24x24x32   | 21x21x64    |
-| ELU     	                    | Exponential Linear Units                    	| 21x21x64   | 21x21x64    |
-| Average pooling	      	    | 4x4 ksize, 1x1 stride, valid padding			| 21x21x64   | 18x18x64    | 
+| LRN 	                        | Local response Normalization                  | 21x21x64   | 21x21x64    |
+| RELU     	                    | Exponential Linear Units                    	| 21x21x64   | 21x21x64    |
+| Max pooling   	      	    | 4x4 ksize, 1x1 stride, valid padding			| 21x21x64   | 18x18x64    | 
 | Convolution         	        | 3x3 ksize, 1x1 stride, same padding           | 18x18x64   | 16x16x72    |
 | ELU     	                    | Exponential Linear Units                      | 18x18x64   | 16x16x72    |
 | Average pooling	      	    | 3x3 ksize, 2x2 stride, valid padding  	    | 16x16x72   | 7x7x72      |
 | Convolution        	        | 2x2 ksize, 1x1 stride, valid padding          | 7x7x72 	 | 6x6x72      |
 | ELU     	                    | Exponential Linear Units                     	| 6x6x72     | 6x6x72      |
-| Average pooling	      	    | 2x2 ksize, 2x2 stride, valid padding      	| 6x6x72     | 3x3x128     |
+| Max pooling   	      	    | 2x2 ksize, 2x2 stride, valid padding      	| 6x6x72     | 3x3x128     |
 | Flatten                       |                                               | 3x3x128    | 1152        |
 | Fully connected		        |           									| 1152       | 256         |
 | RELU                          | Rectified Linear Unit                         | 256        | 256         |
@@ -156,7 +157,7 @@ My final model results were:
  
 ### Test a Model on New Images
 
-Here are 5 out of 36 signs I found on the web:
+Here are 5 samples of 36 signs I found on the web that the classifier made wrong predictions:
 
 ![go straight sign](data/byoi/sign3.png)
 ![keep right](data/byoi/sign8.png)
@@ -164,28 +165,43 @@ Here are 5 out of 36 signs I found on the web:
 ![speed limit 70km/h](data/byoi/sign24.png)
 ![no entry sign](data/byoi/sign33.png)
 
-The first image might be difficult to classify because ...
+- The 1st image might be difficult to classify it is blurry with distracting sharp white border.
+- The 2nd image is off center.
+- The 3rd image is all blurry.
+- The 4th is off-center and a white box below
+- The 5th is not a clean sign
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
-
-The code for making predictions on my final model is located in the tenth cell of the Ipython notebook.
-
-Here are the results of the prediction:
+Here are the sample results of the wrong prediction:
 
 | Image			        |     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Ahead Only      		| Turn Left Ahead   							| 
+| Keep Right     		| Keep Left										|
+| No Entry				| Priority road									|
+| 70 km/h	      		| End of no passing				 				|
+| No Entry      		| Stop              							|
+
+*The code for making predictions on my final model is located in the 14th cell of the Ipython notebook.*
+
+The model was able to correctly guess 25 of the 36 traffic signs, which gives an accuracy of 69.4%. This compares favorably to the accuracy on the test set of 96.5%. That was almost a 30% drops. Looking closer into the prediction result shows that the classifier was able to predict signs that it misclassified at a different angle. This leads me to think that with further preprocessing input and enough training time it should be able to generallized better. However, there are a few predictions that did not resemble one another at all for example "No Entry" and "Priority road". No Entry sign is mostly a red circle with white stripe in the middle while "Priority Road" sign is a white diamond with a yellow diamond in the middle. This kind of misclassify requires more sophisticated technique to troubleshooting and reasoning.
+
+Although, the result drops dramatically on a single guess, the result of 5 guesses (top 5 prediction) does not look so bad. Ihe model was able to correctly classify 33 out of 36 (91.7%). The top 5 was computed using `result = sess.run(topK,feed_dict={x: mySample, keep_prob: 1})` statement (Cell 16th in IPython Notebook). For the most prediction the model was too confident about its answer regardless correct and incorrect answer. Below are prediction results of the first 5 images:
+
+![sign 1](img/sign1_top5.png)
+
+For the first image, the model is cirtain it's a 120km/h speed limit but the 2nd guess is also make sense 100km/h speed limit.
+
+![sign 2](img/sign2_top5.png)
+
+For the second image, the model is not very sure wheter the sign is 80km/h or 50km/h which a probability of 59.16% vs 38.8%. But it was able to predict correctly.
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+![sign 3](img/sign3_top5.png)
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+![sign 4](img/sign4_top5.png)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+![sign 5](img/sign5_top5.png)
+
 
 For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
 
