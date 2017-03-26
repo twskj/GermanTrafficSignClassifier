@@ -207,6 +207,8 @@ The forth image is an artificial image. I include this sign as a sanity check th
 
 The last image the model is 100% sure  that the sign is "Turn right ahead"
 
+----------
+
 Lastly, I think it's worth looking at sign 10 as well:
 
 ![sign 10](img/sign10_top5.png)
